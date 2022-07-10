@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -22,18 +23,23 @@ import java.util.List;
 public class Course extends EntityWithId {
 
     @Column(nullable = false)
-    private String name;
+    private String title;
     private Double price;
     @ElementCollection
-    private List<String> teachers;
+    private List<String> tags = Collections.emptyList();
     @ElementCollection
-    private List<String> students;
+    private List<String> teachers = Collections.emptyList();
     @ElementCollection
-    private List<String> tags;
+    private List<String> students = Collections.emptyList();
     @ElementCollection
-    private List<String> lessons;
+    private List<String> lessons = Collections.emptyList();
 
     public Course(CourseDTO courseDTO) {
         BeanUtils.copyProperties(courseDTO, this);
+    }
+
+    public Course(String title, Double price) {
+        this.title = title;
+        this.price = price;
     }
 }
