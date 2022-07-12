@@ -37,13 +37,31 @@
 <div class="container-fluid">
     <div class="row">
         <h2>Courses</h2>
+        <h6>Hints:</h6>
+        <small style="color: gray; font-style:italic; font-size: x-small">
+            * click 'Title' value of some course to see details of this course
+        </small>
+        <small style="color: gray; font-style:italic; font-size: x-small">
+            * click 'Lessons count' value of some course to see lessons of this course
+        </small>
+        <small style="color: gray; font-style:italic; font-size: x-small">
+            * click 'Teachers count' value of some course to see teachers of this course
+        </small>
+        <small style="color: gray; font-style:italic; font-size: x-small">
+            * click 'Students count' value of some course to see students of this course
+        </small>
     </div>
     <div class="row">
         <div class="col-lg-3 align-self-end">
-            <a th:href="@{courses/new}" class="btn btn-primary btn-sm mb-3">Add course</a>
+            <a th:href="@{courses/new}" class="btn btn-primary mb-3 mt-3">Add course</a>
         </div>
     </div>
     <table class="table table-bordered table-striped table-primary">
+        <script>
+            function lessonsCountClicked(value) {
+                location.href = "courses/" + value + "/lessons";
+            }
+        </script>
         <thead class="table-primary position-sticky">
         <tr>
             <th> Title</th>
@@ -58,7 +76,8 @@
         <tr th:each="course: ${courses}">
             <td th:text="${course.title}"></td>
             <td th:text="${course.price}"></td>
-            <td th:text="${#lists.size(course.lessons)}"></td>
+            <td th:text="${#lists.size(course.lessons)}" style="cursor: pointer"
+                th:attr="onclick=|lessonsCountClicked('${course.id}')|"></td>
             <td th:text="${#lists.size(course.teachers)}"></td>
             <td th:text="${#lists.size(course.students)}"></td>
             <td>
