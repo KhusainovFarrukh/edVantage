@@ -44,4 +44,10 @@ public class CourseController {
         courseService.updateCourse(id, courseDTO);
         return "redirect:/courses";
     }
+
+    @GetMapping("delete/{id}")
+    public String deleteCourse(@PathVariable long id) {
+        courseService.deleteCourseById(id);
+        return "redirect:/courses";
+    }
 }

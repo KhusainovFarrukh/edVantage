@@ -62,10 +62,15 @@
             <td th:text="${#lists.size(course.teachers)}"></td>
             <td th:text="${#lists.size(course.students)}"></td>
             <td>
-                <a th:href="@{/courses/edit/{id}(id=${course.id})}" class="btn btn-primary">
+                <a th:href="@{/courses/edit/{id}(id=${course.id})}" class="btn btn-success">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
                          th:src="@{/images/icon_edit.png}" alt="" width="16" height="16">
                     Update
+                </a>
+                <a th:href="@{/courses/delete/{id}(id=${course.id})}" class="btn btn-danger">
+                    <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
+                         th:src="@{/images/icon_delete.png}" alt="" width="16" height="16">
+                    Delete
                 </a>
             </td>
         </tr>
