@@ -7,6 +7,33 @@
     <title>List of courses</title>
 </head>
 <body>
+<nav class="navbar sticky-top navbar-expand-md bg-primary navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">
+        <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/logo_edVantage.png"
+             th:src="@{/images/logo_edVantage.png}"
+             alt="" width="30" height="24"
+             class="d-inline-block align-text-top">
+        edVantage
+    </a>
+
+    <!-- Toggler/collapsible Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/courses}">All courses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/courses/new}">Add course</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 <div class="container-fluid">
     <div class="row">
         <h2>Courses</h2>
@@ -16,8 +43,8 @@
             <a th:href="@{courses/new}" class="btn btn-primary btn-sm mb-3">Add course</a>
         </div>
     </div>
-    <table class="table table-bordered table-striped table-dark">
-        <thead class="table-dark">
+    <table class="table table-bordered table-striped table-primary">
+        <thead class="table-primary position-sticky">
         <tr>
             <th> Title</th>
             <th> Price</th>
