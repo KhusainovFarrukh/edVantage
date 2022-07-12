@@ -64,6 +64,7 @@
         </script>
         <thead class="table-primary position-sticky">
         <tr>
+            <th> #</th>
             <th> Title</th>
             <th> Price</th>
             <th> Lessons count</th>
@@ -73,7 +74,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="course: ${courses}">
+        <tr th:each="course, iterator: ${courses}">
+            <td th:text="${iterator.count}"></td>
             <td th:text="${course.title}"></td>
             <td th:text="${course.price}"></td>
             <td th:text="${#lists.size(course.lessons)}" style="cursor: pointer"

@@ -54,6 +54,7 @@
     <table class="table table-bordered table-striped table-primary">
         <thead class="table-primary position-sticky">
         <tr>
+            <th> #</th>
             <th> Title</th>
             <th> Author</th>
             <th> Text-Body</th>
@@ -63,7 +64,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="lesson: ${lessons}">
+        <tr th:each="lesson, iteration: ${lessons}">
+            <td th:text="${iteration.count}"></td>
             <td th:text="${lesson.title}"></td>
             <td th:text="${lesson.author}"></td>
             <td th:text="${lesson.textBody}"></td>
