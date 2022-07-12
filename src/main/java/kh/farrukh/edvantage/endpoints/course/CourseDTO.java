@@ -1,4 +1,4 @@
-package kh.farrukh.edvantage.course;
+package kh.farrukh.edvantage.endpoints.course;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

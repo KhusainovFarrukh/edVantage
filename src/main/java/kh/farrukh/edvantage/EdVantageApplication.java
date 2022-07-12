@@ -1,7 +1,6 @@
 package kh.farrukh.edvantage;
 
-import kh.farrukh.edvantage.course.Course;
-import kh.farrukh.edvantage.course.CourseRepository;
+import kh.farrukh.edvantage.endpoints.course.CourseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

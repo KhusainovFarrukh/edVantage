@@ -1,4 +1,4 @@
-package kh.farrukh.edvantage.course;
+package kh.farrukh.edvantage.endpoints.course;
 
 import kh.farrukh.edvantage.exception.custom_exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
