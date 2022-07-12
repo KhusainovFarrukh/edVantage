@@ -3,10 +3,7 @@ package kh.farrukh.edvantage.course;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import static kh.farrukh.edvantage.utils.constants.ApiEndpoints.ENDPOINT_COURSE;
 
@@ -26,13 +23,25 @@ public class CourseController {
     @GetMapping("/new")
     public String addCourseFrom(Model model) {
         CourseDTO courseDTO = new CourseDTO();
-        model.addAttribute("course_dto", courseDTO);
+        model.addAttribute("course", courseDTO);
         return "add_course";
     }
 
     @PostMapping
-    public String addCourse(@ModelAttribute("course_dto") CourseDTO courseDTO) {
+    public String addCourse(@ModelAttribute("course") CourseDTO courseDTO) {
         courseService.addCourse(courseDTO);
+        return "redirect:/courses";
+    }
+
+    @GetMapping("edit/{id}")
+    public String editCourseFrom(@PathVariable long id, Model model) {
+        model.addAttribute("course", courseService.getCourseById(id));
+        return "edit_course";
+    }
+
+    @PostMapping("edit/{id}")
+    public String updateCourse(@PathVariable long id, @ModelAttribute("course") CourseDTO courseDTO) {
+        courseService.updateCourse(id, courseDTO);
         return "redirect:/courses";
     }
 }

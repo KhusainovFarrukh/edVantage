@@ -51,6 +51,7 @@
             <th> Lessons count</th>
             <th> Teachers count</th>
             <th> Students count</th>
+            <th> Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -60,6 +61,13 @@
             <td th:text="${#lists.size(course.lessons)}"></td>
             <td th:text="${#lists.size(course.teachers)}"></td>
             <td th:text="${#lists.size(course.students)}"></td>
+            <td>
+                <a th:href="@{/courses/edit/{id}(id=${course.id})}" class="btn btn-primary">
+                    <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
+                         th:src="@{/images/icon_edit.png}" alt="" width="16" height="16">
+                    Update
+                </a>
+            </td>
         </tr>
         </tbody>
     </table>
