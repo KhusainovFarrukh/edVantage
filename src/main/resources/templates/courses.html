@@ -73,7 +73,7 @@
             <th> Actions</th>
         </tr>
         </thead>
-        <tbody>
+        <tbody th:if="${!courses.page.content.empty}">
         <tr th:each="course, iterator: ${courses.page}">
             <td th:text="${courses.pagingNavData.pageSize * (courses.pagingNavData.pageNumber - 1) + iterator.count}"></td>
             <td th:text="${course.title}"></td>
@@ -94,6 +94,11 @@
                     Delete
                 </a>
             </td>
+        </tr>
+        </tbody>
+        <tbody th:if="${courses.page.content.empty}">
+        <tr>
+            <td class="text-center" colspan="7"><b>No courses found</b></td>
         </tr>
         </tbody>
     </table>
