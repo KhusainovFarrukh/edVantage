@@ -1,16 +1,14 @@
 package kh.farrukh.edvantage.endpoints.course;
 
 import kh.farrukh.edvantage.base.entity.EntityWithId;
+import kh.farrukh.edvantage.endpoints.lesson.Lesson;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.BeanUtils;
 
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -31,8 +29,8 @@ public class Course extends EntityWithId {
     private List<String> teachers = Collections.emptyList();
     @ElementCollection
     private List<String> students = Collections.emptyList();
-    @ElementCollection
-    private List<String> lessons = Collections.emptyList();
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
+    private List<Lesson> lessons = Collections.emptyList();
 
     public Course(CourseDTO courseDTO) {
         BeanUtils.copyProperties(courseDTO, this);

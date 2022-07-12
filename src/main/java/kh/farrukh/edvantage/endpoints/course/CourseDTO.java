@@ -18,5 +18,4 @@ public class CourseDTO {
     private List<String> tags = Collections.emptyList();
     private List<String> teachers = Collections.emptyList();
     private List<String> students = Collections.emptyList();
-    private List<String> lessons = Collections.emptyList();
 }

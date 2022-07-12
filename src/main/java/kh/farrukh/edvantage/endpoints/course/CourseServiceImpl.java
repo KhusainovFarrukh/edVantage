@@ -39,7 +39,6 @@ public class CourseServiceImpl implements CourseService {
         existingCourse.setTags(courseDTO.getTags());
         existingCourse.setTeachers(courseDTO.getTeachers());
         existingCourse.setStudents(courseDTO.getStudents());
-        existingCourse.setLessons(courseDTO.getLessons());
         return courseRepository.save(existingCourse);
     }
 
