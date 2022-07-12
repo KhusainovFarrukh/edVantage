@@ -15,9 +15,14 @@ public class LessonController {
     private final LessonService lessonService;
 
     @GetMapping
-    public String lessonsList(@PathVariable long courseId, Model model) {
+    public String lessonsList(
+            @PathVariable long courseId,
+            @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
+            @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
+            Model model
+    ) {
         model.addAttribute("course_id", courseId);
-        model.addAttribute("lessons", lessonService.getLessonsOfCourse(courseId));
+        model.addAttribute("lessons", lessonService.getLessonsOfCourse(courseId, pageNumber, pageSize));
         return "lessons";
     }
 
@@ -32,7 +37,7 @@ public class LessonController {
     @PostMapping
     public String addLesson(@PathVariable long courseId, @ModelAttribute("lesson") LessonDTO lessonDTO) {
         lessonService.addLesson(courseId, lessonDTO);
-        return "redirect:/courses/"+courseId+"/lessons";
+        return "redirect:/courses/" + courseId + "/lessons";
     }
 
     @GetMapping("edit/{id}")
@@ -45,12 +50,12 @@ public class LessonController {
     @PostMapping("edit/{id}")
     public String updateCourse(@PathVariable long courseId, @PathVariable long id, @ModelAttribute("course") LessonDTO lessonDTO) {
         lessonService.updateLesson(courseId, id, lessonDTO);
-        return "redirect:/courses/"+courseId+"/lessons";
+        return "redirect:/courses/" + courseId + "/lessons";
     }
 
     @GetMapping("delete/{id}")
     public String deleteCourse(@PathVariable long courseId, @PathVariable long id) {
         lessonService.deleteLessonById(courseId, id);
-        return "redirect:/courses/"+courseId+"/lessons";
+        return "redirect:/courses/" + courseId + "/lessons";
     }
 }

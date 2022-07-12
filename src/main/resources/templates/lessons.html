@@ -63,14 +63,14 @@
             <th> Actions</th>
         </tr>
         </thead>
-        <tbody>
-        <tr th:each="lesson, iteration: ${lessons}">
-            <td th:text="${iteration.count}"></td>
+        <tbody th:if="${!lessons.page.content.empty}">
+        <tr th:each="lesson: ${lessons.page}">
+            <td th:text="${lessons.pagingNavData.pageSize * (lessons.pagingNavData.pageNumber - 1) + lessonStat.count}"></td>
             <td th:text="${lesson.title}"></td>
             <td th:text="${lesson.author}"></td>
             <td th:text="${lesson.textBody}"></td>
             <td th:text="${lesson.course.title}"></td>
-            <td th:text="${#lists.size(lesson.videos)}"></td>
+            <td th:text="${lesson.videos.size}"></td>
             <td>
                 <a th:href="@{/courses/{courseId}/lessons/edit/{id}(id=${lesson.id},courseId=${course_id})}"
                    class="btn btn-success">
@@ -87,7 +87,37 @@
             </td>
         </tr>
         </tbody>
+        <tbody th:if="${lessons.page.content.empty}">
+        <tr>
+            <td class="text-center" colspan="7"><b>No lessons found</b></td>
+        </tr>
+        </tbody>
     </table>
+
+    <nav aria-label="Page navigation" class="paging">
+        <ul class="pagination" th:if="${lessons.page.totalPages > 1}">
+            <li class="page-item" th:classappend="${!lessons.pagingNavData.isPrevEnabled()? 'disabled' : ''}">
+                <a class="page-link"
+                   th:href="@{'?page=' + ${lessons.pagingNavData.pageNumber - 1} + '&page_size=' + ${lessons.pagingNavData.pageSize}}"
+                   tabindex="-1">Previous</a>
+            </li>
+            <th:block th:each="item : ${lessons.pagingNavData.getItems()}">
+                <li class="page-item" th:classappend="${item.index == lessons.pagingNavData.pageNumber? 'active' : ''}"
+                    th:if="${item.itemType.name() == 'PAGE'}">
+                    <a class="page-link"
+                       th:href="@{'?page=' + ${item.index} + '&page_size=' + ${lessons.pagingNavData.pageSize}}"
+                       th:text="${item.index}"></a>
+                </li>
+                <li class="page-item disabled" th:if="${item.itemType.name() == 'DOTS'}">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            </th:block>
+            <li class="page-item" th:classappend="${!lessons.pagingNavData.isNextEnabled()? 'disabled' : ''}">
+                <a class="page-link"
+                   th:href="@{'?page=' + ${lessons.pagingNavData.pageNumber + 1} + '&page_size=' + ${lessons.pagingNavData.pageSize}}">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 </body>
 </html>

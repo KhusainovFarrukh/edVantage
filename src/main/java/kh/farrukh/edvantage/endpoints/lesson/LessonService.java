@@ -1,10 +1,10 @@
 package kh.farrukh.edvantage.endpoints.lesson;
 
-import java.util.List;
+import kh.farrukh.edvantage.utils.pagination.PagedList;
 
 public interface LessonService {
 
-    List<Lesson> getLessonsOfCourse(long courseId);
+    PagedList<Lesson> getLessonsOfCourse(long courseId, int pageNumber, int pageSize);
 
     Lesson getLessonById(long courseId, long id);
 

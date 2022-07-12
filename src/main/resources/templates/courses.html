@@ -74,14 +74,14 @@
         </tr>
         </thead>
         <tbody th:if="${!courses.page.content.empty}">
-        <tr th:each="course, iterator: ${courses.page}">
-            <td th:text="${courses.pagingNavData.pageSize * (courses.pagingNavData.pageNumber - 1) + iterator.count}"></td>
+        <tr th:each="course: ${courses.page}">
+            <td th:text="${courses.pagingNavData.pageSize * (courses.pagingNavData.pageNumber - 1) + courseStat.count}"></td>
             <td th:text="${course.title}"></td>
             <td th:text="${course.price}"></td>
-            <td th:text="${#lists.size(course.lessons)}" style="cursor: pointer"
+            <td th:text="${course.lessons.size}" style="cursor: pointer"
                 th:attr="onclick=|lessonsCountClicked('${course.id}')|"></td>
-            <td th:text="${#lists.size(course.teachers)}"></td>
-            <td th:text="${#lists.size(course.students)}"></td>
+            <td th:text="${course.teachers.size}"></td>
+            <td th:text="${course.students.size}"></td>
             <td>
                 <a th:href="@{/courses/edit/{id}(id=${course.id})}" class="btn btn-success">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
