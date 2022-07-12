@@ -1,10 +1,11 @@
 package kh.farrukh.edvantage.endpoints.course;
 
 import kh.farrukh.edvantage.exception.custom_exceptions.ResourceNotFoundException;
+import kh.farrukh.edvantage.utils.pagination.PagedList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -13,8 +14,9 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
 
     @Override
-    public List<Course> getCourses() {
-        return courseRepository.findAll();
+    public PagedList<Course> getCourses(int pageNumber, int pageSize) {
+        Page<Course> page = courseRepository.findAll(PageRequest.of(pageNumber - 1, pageSize));
+        return new PagedList<>(page, pageNumber, pageSize);
     }
 
     @Override

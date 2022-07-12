@@ -74,8 +74,8 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="course, iterator: ${courses}">
-            <td th:text="${iterator.count}"></td>
+        <tr th:each="course, iterator: ${courses.page}">
+            <td th:text="${courses.pagingNavData.pageSize * (courses.pagingNavData.pageNumber - 1) + iterator.count}"></td>
             <td th:text="${course.title}"></td>
             <td th:text="${course.price}"></td>
             <td th:text="${#lists.size(course.lessons)}" style="cursor: pointer"
@@ -97,6 +97,31 @@
         </tr>
         </tbody>
     </table>
+
+    <nav aria-label="Page navigation" class="paging">
+        <ul class="pagination" th:if="${courses.page.totalPages > 1}">
+            <li class="page-item" th:classappend="${!courses.pagingNavData.isPrevEnabled()? 'disabled' : ''}">
+                <a class="page-link"
+                   th:href="@{'?page=' + ${courses.pagingNavData.pageNumber - 1} + '&page_size=' + ${courses.pagingNavData.pageSize}}"
+                   tabindex="-1">Previous</a>
+            </li>
+            <th:block th:each="item : ${courses.pagingNavData.getItems()}">
+                <li class="page-item" th:classappend="${item.index == courses.pagingNavData.pageNumber? 'active' : ''}"
+                    th:if="${item.itemType.name() == 'PAGE'}">
+                    <a class="page-link"
+                       th:href="@{'?page=' + ${item.index} + '&page_size=' + ${courses.pagingNavData.pageSize}}"
+                       th:text="${item.index}"></a>
+                </li>
+                <li class="page-item disabled" th:if="${item.itemType.name() == 'DOTS'}">
+                    <a class="page-link" href="#">...</a>
+                </li>
+            </th:block>
+            <li class="page-item" th:classappend="${!courses.pagingNavData.isNextEnabled()? 'disabled' : ''}">
+                <a class="page-link"
+                   th:href="@{'?page=' + ${courses.pagingNavData.pageNumber + 1} + '&page_size=' + ${courses.pagingNavData.pageSize}}">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 </body>
 </html>

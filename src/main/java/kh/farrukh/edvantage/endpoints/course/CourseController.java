@@ -15,8 +15,12 @@ public class CourseController {
     private final CourseService courseService;
 
     @GetMapping
-    public String coursesList(Model model) {
-        model.addAttribute("courses", courseService.getCourses());
+    public String coursesList(
+            @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
+            @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
+            Model model
+    ) {
+        model.addAttribute("courses", courseService.getCourses(pageNumber, pageSize));
         return "courses";
     }
 
