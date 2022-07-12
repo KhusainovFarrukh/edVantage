@@ -25,16 +25,26 @@ public class CourseController {
     }
 
     @GetMapping("/new")
-    public String addCourseFrom(Model model) {
+    public String addCourseFrom(
+            @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
+            @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
+            Model model
+    ) {
         CourseDTO courseDTO = new CourseDTO();
+        model.addAttribute("page_number", pageNumber);
+        model.addAttribute("page_size", pageSize);
         model.addAttribute("course", courseDTO);
         return "add_course";
     }
 
     @PostMapping
-    public String addCourse(@ModelAttribute("course") CourseDTO courseDTO) {
+    public String addCourse(
+            @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
+            @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
+            @ModelAttribute("course") CourseDTO courseDTO
+    ) {
         courseService.addCourse(courseDTO);
-        return "redirect:/courses";
+        return "redirect:/courses?page=" + pageNumber + "&page_size=" + pageSize;
     }
 
     @GetMapping("edit/{id}")
@@ -44,7 +54,10 @@ public class CourseController {
     }
 
     @PostMapping("edit/{id}")
-    public String updateCourse(@PathVariable long id, @ModelAttribute("course") CourseDTO courseDTO) {
+    public String updateCourse(
+            @PathVariable long id,
+            @ModelAttribute("course") CourseDTO courseDTO
+    ) {
         courseService.updateCourse(id, courseDTO);
         return "redirect:/courses";
     }

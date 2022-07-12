@@ -42,7 +42,7 @@
         <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">
             <h1 class="text-center"> Create new course </h1>
             <div class="card-body">
-                <form th:action="@{/courses}" th:object="${course}" method="POST">
+                <form th:action="@{'/courses?page='+${page_number}+'&page_size='+${page_size}}" th:object="${course}" method="POST">
                     <div class="form-group">
                         <label> Title </label>
                         <input

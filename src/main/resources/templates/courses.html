@@ -53,7 +53,8 @@
     </div>
     <div class="row">
         <div class="col-lg-3 align-self-end">
-            <a th:href="@{courses/new}" class="btn btn-primary mb-3 mt-3">Add course</a>
+            <a th:href="@{'courses/new?page='+${courses.pagingNavData.pageNumber}+'&page_size='+${courses.pagingNavData.pageSize}}"
+               class="btn btn-primary mb-3 mt-3">Add course</a>
         </div>
     </div>
     <table class="table table-bordered table-striped table-primary">
