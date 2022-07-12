@@ -19,5 +19,5 @@ public class LessonDTO {
     @JsonProperty("text_body")
     private String textBody;
     private List<String> videos = Collections.emptyList();
-    private long course;
+//    private long course;
 }

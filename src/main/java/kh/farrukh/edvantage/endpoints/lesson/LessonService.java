@@ -4,13 +4,13 @@ import java.util.List;
 
 public interface LessonService {
 
-    List<Lesson> getLessons();
+    List<Lesson> getLessonsOfCourse(long courseId);
 
-    Lesson getLessonById(long id);
+    Lesson getLessonById(long courseId, long id);
 
-    Lesson addLesson(LessonDTO lessonDTO);
+    Lesson addLesson(long courseId, LessonDTO lessonDTO);
 
-    Lesson updateLesson(long id, LessonDTO lessonDTO);
+    Lesson updateLesson(long courseId, long id, LessonDTO lessonDTO);
 
-    void deleteLessonById(long id);
+    void deleteLessonById(long courseId, long id);
 }
