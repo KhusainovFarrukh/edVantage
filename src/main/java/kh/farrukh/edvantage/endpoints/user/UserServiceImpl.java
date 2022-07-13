@@ -1,6 +1,7 @@
 package kh.farrukh.edvantage.endpoints.user;
 
 import kh.farrukh.edvantage.endpoints.role.RoleRepository;
+import kh.farrukh.edvantage.exception.custom_exceptions.DuplicateResourceException;
 import kh.farrukh.edvantage.exception.custom_exceptions.ResourceNotFoundException;
 import kh.farrukh.edvantage.utils.checkers.CheckUtils;
 import kh.farrukh.edvantage.utils.pagination.PagedList;
@@ -51,6 +52,12 @@ public class UserServiceImpl implements UserService {
         AppUser existingUser = userRepository.findById(id).orElseThrow(
                 () -> new ResourceNotFoundException("User", "id", id)
         );
+
+        if (!userDTO.getEmail().equals(existingUser.getEmail()) &&
+                userRepository.existsByEmail(userDTO.getEmail())) {
+            throw new DuplicateResourceException("User", "email", userDTO.getEmail());
+        }
+
         existingUser.setName(userDTO.getName());
         existingUser.setEmail(userDTO.getEmail());
         return userRepository.save(existingUser);

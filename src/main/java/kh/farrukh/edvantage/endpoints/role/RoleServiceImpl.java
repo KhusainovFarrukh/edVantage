@@ -1,5 +1,6 @@
 package kh.farrukh.edvantage.endpoints.role;
 
+import kh.farrukh.edvantage.exception.custom_exceptions.DuplicateResourceException;
 import kh.farrukh.edvantage.exception.custom_exceptions.ResourceNotFoundException;
 import kh.farrukh.edvantage.utils.checkers.CheckUtils;
 import kh.farrukh.edvantage.utils.pagination.PagedList;
@@ -35,8 +36,18 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role updateRole(long id, RoleDTO roleDTO) {
-        CheckUtils.checkRoleId(id, roleRepository);
-        return roleRepository.save(new Role(roleDTO));
+        Role existingRole = roleRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Role", "id", id)
+        );
+
+        if (!roleDTO.getTitle().equals(existingRole.getTitle()) &&
+                roleRepository.existsByTitle(roleDTO.getTitle())) {
+            throw new DuplicateResourceException("Role", "title", roleDTO.getTitle());
+        }
+
+        existingRole.setTitle(roleDTO.getTitle());
+        existingRole.setUserFeatures(roleDTO.getUserFeatures());
+        return roleRepository.save(existingRole);
     }
 
     @Override
