@@ -20,7 +20,7 @@ public class LessonServiceImpl implements LessonService {
     public PagedList<Lesson> getLessonsOfCourse(long courseId, int pageNumber, int pageSize) {
         CheckUtils.checkCourseId(courseId, courseRepository);
         Page<Lesson> page = lessonRepository.findByCourse_Id(courseId, PageRequest.of(pageNumber - 1, pageSize));
-        return new PagedList<>(page, pageNumber, pageSize);
+        return new PagedList<>(page);
     }
 
     @Override

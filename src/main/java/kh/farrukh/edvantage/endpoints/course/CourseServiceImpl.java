@@ -16,7 +16,7 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public PagedList<Course> getCourses(int pageNumber, int pageSize) {
         Page<Course> page = courseRepository.findAll(PageRequest.of(pageNumber - 1, pageSize));
-        return new PagedList<>(page, pageNumber, pageSize);
+        return new PagedList<>(page);
     }
 
     @Override

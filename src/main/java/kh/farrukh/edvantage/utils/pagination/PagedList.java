@@ -14,8 +14,12 @@ public class PagedList<T> {
 
     private PagingNavData pagingNavData;
 
-    public PagedList(Page<T> page, int pageNumber, int pageSize) {
+    public PagedList(Page<T> page) {
         this.page = page;
-        this.pagingNavData = new PagingNavData(page.getTotalPages(), pageNumber, pageSize);
+        this.pagingNavData = new PagingNavData(
+                page.getTotalPages(),
+                page.getPageable().getPageNumber() + 1,
+                page.getPageable().getPageSize()
+        );
     }
 }
