@@ -1,6 +1,6 @@
 package kh.farrukh.edvantage.endpoints.role;
 
-public enum UserFeatures {
+public enum UserFeature {
     GET_COURSE,
     CREATE_COURSE,
     UPDATE_COURSE,

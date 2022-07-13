@@ -3,6 +3,7 @@ package kh.farrukh.edvantage.utils.checkers;
 import kh.farrukh.edvantage.endpoints.course.CourseRepository;
 import kh.farrukh.edvantage.endpoints.lesson.LessonRepository;
 import kh.farrukh.edvantage.endpoints.role.RoleRepository;
+import kh.farrukh.edvantage.endpoints.user.UserRepository;
 import kh.farrukh.edvantage.exception.custom_exceptions.DuplicateResourceException;
 import kh.farrukh.edvantage.exception.custom_exceptions.ResourceNotFoundException;
 
@@ -29,6 +30,18 @@ public class CheckUtils {
     public static void checkRoleIsUnique(String title, RoleRepository roleRepository) {
         if (roleRepository.existsByTitle(title)) {
             throw new DuplicateResourceException("Role", "title", title);
+        }
+    }
+
+    public static void checkUserId(long userId, UserRepository userRepository) {
+        if (!userRepository.existsById(userId)) {
+            throw new ResourceNotFoundException("User", "id", userId);
+        }
+    }
+
+    public static void checkUserIsUnique(String email, UserRepository userRepository) {
+        if (userRepository.existsByEmail(email)) {
+            throw new DuplicateResourceException("User", "email", email);
         }
     }
 }

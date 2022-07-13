@@ -14,5 +14,5 @@ import java.util.Set;
 public class RoleDTO {
     @NotBlank
     private String title;
-    private Set<UserFeatures> userFeatures = Collections.emptySet();
+    private Set<UserFeature> userFeatures = Collections.emptySet();
 }

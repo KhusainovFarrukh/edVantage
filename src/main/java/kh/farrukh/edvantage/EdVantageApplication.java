@@ -1,24 +1,22 @@
 package kh.farrukh.edvantage;
 
-import kh.farrukh.edvantage.endpoints.course.CourseRepository;
-import kh.farrukh.edvantage.endpoints.lesson.LessonRepository;
-import kh.farrukh.edvantage.endpoints.role.RoleDTO;
+import kh.farrukh.edvantage.endpoints.course.CourseService;
+import kh.farrukh.edvantage.endpoints.lesson.LessonService;
 import kh.farrukh.edvantage.endpoints.role.RoleService;
-import kh.farrukh.edvantage.endpoints.role.UserFeatures;
+import kh.farrukh.edvantage.endpoints.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Set;
-
 @SpringBootApplication
 @RequiredArgsConstructor
 public class EdVantageApplication implements CommandLineRunner {
 
-    private final CourseRepository courseRepository;
-    private final LessonRepository lessonRepository;
+    private final CourseService courseService;
+    private final LessonService lessonService;
     private final RoleService roleService;
+    private final UserService userService;
 
     public static void main(String[] args) {
         SpringApplication.run(EdVantageApplication.class, args);
@@ -27,11 +25,11 @@ public class EdVantageApplication implements CommandLineRunner {
     @Override
     public void run(String... args) {
 /*
-        courseRepository.save(new Course("Kotlin basics", 166.99));
-        courseRepository.save(new Course("Spring Boot for professionals", 250.00));
-        courseRepository.save(new Course("From Java-8 to Java-18", 0.99));
-        courseRepository.save(new Course("English for IT", 59.99));
-        courseRepository.save(new Course("Data Science", 109.90));
+        courseService.addCourse(new CourseDTO("Kotlin basics", 166.99));
+        courseService.addCourse(new CourseDTO("Spring Boot for professionals", 250.00));
+        courseService.addCourse(new CourseDTO("From Java-8 to Java-18", 0.99));
+        courseService.addCourse(new CourseDTO("English for IT", 59.99));
+        courseService.addCourse(new CourseDTO("Data Science", 109.90));
 */
 /*        roleService.addRole(new RoleDTO(
                 "admin",
@@ -61,5 +59,50 @@ public class EdVantageApplication implements CommandLineRunner {
                         UserFeatures.UPDATE_USER
                 )
         ));*/
+
+/*
+        userService.addUser(new AppUserDTO(
+                "Farrukh Khusainov",
+                "farrukh@mail.com",
+                "12345678",
+                1
+        ));
+        userService.addUser(new AppUserDTO(
+                "Hamdam Xudayberganov",
+                "hamdam@mail.com",
+                "12345678",
+                2
+        ));
+        userService.addUser(new AppUserDTO(
+                "AmigosCode",
+                "amigos@mail.com",
+                "12345678",
+                2
+        ));
+        userService.addUser(new AppUserDTO(
+                "Ramesh Fedatare",
+                "ramesh@mail.com",
+                "12345678",
+                2
+        ));
+        userService.addUser(new AppUserDTO(
+                "User Userov",
+                "user@mail.com",
+                "12345678",
+                3
+        ));
+        userService.addUser(new AppUserDTO(
+                "Lorem Ipsumov",
+                "lorem@mail.com",
+                "12345678",
+                3
+        ));
+        userService.addUser(new AppUserDTO(
+                "Test Testov",
+                "test@mail.com",
+                "12345678",
+                3
+        ));
+*/
     }
 }

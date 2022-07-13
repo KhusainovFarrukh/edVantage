@@ -18,4 +18,9 @@ public class CourseDTO {
     private List<String> tags = Collections.emptyList();
     private List<String> teachers = Collections.emptyList();
     private List<String> students = Collections.emptyList();
+
+    public CourseDTO(String title, Double price) {
+        this.title = title;
+        this.price = price;
+    }
 }
