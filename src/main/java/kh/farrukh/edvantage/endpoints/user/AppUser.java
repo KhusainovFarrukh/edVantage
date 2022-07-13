@@ -36,7 +36,7 @@ public class AppUser extends EntityWithId implements UserDetails {
     private Role role;
 
     public AppUser(AppUserDTO userDTO, RoleRepository roleRepository) {
-        BeanUtils.copyProperties(userDTO, this);
+        BeanUtils.copyProperties(userDTO, this, "password");
         this.role = roleRepository.findById(userDTO.getRole()).orElseThrow(
                 () -> new ResourceNotFoundException("Role", "id", userDTO.getRole())
         );
