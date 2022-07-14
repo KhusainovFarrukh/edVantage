@@ -73,13 +73,13 @@
             <td th:text="${lesson.videos.size}"></td>
             <td>
                 <a th:href="@{/courses/{courseId}/lessons/edit/{id}(id=${lesson.id},courseId=${course_id})}"
-                   class="btn btn-success">
+                   class="btn btn-success m-1">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
                          th:src="@{/images/icon_edit.png}" alt="" width="16" height="16">
                     Update
                 </a>
                 <a th:href="@{/courses/{courseId}/lessons/delete/{id}(id=${lesson.id},courseId=${course_id})}"
-                   class="btn btn-danger">
+                   class="btn btn-danger m-1">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
                          th:src="@{/images/icon_delete.png}" alt="" width="16" height="16">
                     Delete

@@ -4,7 +4,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>List of courses</title>
+    <title>List of roles</title>
 </head>
 <body>
 <nav class="navbar sticky-top navbar-expand-md bg-primary navbar-dark">
@@ -36,59 +36,34 @@
 </nav>
 <div class="container-fluid">
     <div class="row">
-        <h2>Courses</h2>
-        <h6>Hints:</h6>
-        <small style="color: gray; font-style:italic; font-size: x-small">
-            * click 'Title' value of some course to see details of this course
-        </small>
-        <small style="color: gray; font-style:italic; font-size: x-small">
-            * click 'Lessons count' value of some course to see lessons of this course
-        </small>
-        <small style="color: gray; font-style:italic; font-size: x-small">
-            * click 'Teachers count' value of some course to see teachers of this course
-        </small>
-        <small style="color: gray; font-style:italic; font-size: x-small">
-            * click 'Students count' value of some course to see students of this course
-        </small>
+        <h2>Roles</h2>
     </div>
     <div class="row">
         <div class="col-lg-3 align-self-end">
-            <a th:href="@{courses/new}" class="btn btn-primary mb-3 mt-3">Add course</a>
+            <a th:href="@{roles/new}" class="btn btn-primary mb-3 mt-3">Add role</a>
         </div>
     </div>
     <table class="table table-bordered table-striped table-primary">
-        <script>
-            function lessonsCountClicked(value) {
-                location.href = "courses/" + value + "/lessons";
-            }
-        </script>
         <thead class="table-primary position-sticky">
         <tr>
             <th> #</th>
             <th> Title</th>
-            <th> Price</th>
-            <th> Lessons count</th>
-            <th> Teachers count</th>
-            <th> Students count</th>
+            <th> Features</th>
             <th> Actions</th>
         </tr>
         </thead>
-        <tbody th:if="${!courses.page.content.empty}">
-        <tr th:each="course: ${courses.page}">
-            <td th:text="${courses.pagingNavData.pageSize * (courses.pagingNavData.pageNumber - 1) + courseStat.count}"></td>
-            <td th:text="${course.title}"></td>
-            <td th:text="${course.price}"></td>
-            <td th:text="${course.lessons.size}" style="cursor: pointer"
-                th:attr="onclick=|lessonsCountClicked('${course.id}')|"></td>
-            <td th:text="${course.teachers.size}"></td>
-            <td th:text="${course.students.size}"></td>
+        <tbody th:if="${!roles.page.content.empty}">
+        <tr th:each="role: ${roles.page}">
+            <td th:text="${roles.pagingNavData.pageSize * (roles.pagingNavData.pageNumber - 1) + roleStat.count}"></td>
+            <td th:text="${role.title}"></td>
+            <td th:text="${#strings.listJoin(role.userFeatures, ', ')}"></td>
             <td>
-                <a th:href="@{/courses/edit/{id}(id=${course.id})}" class="btn btn-success m-1">
+                <a th:href="@{/roles/edit/{id}(id=${role.id})}" class="btn btn-success m-1">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
                          th:src="@{/images/icon_edit.png}" alt="" width="16" height="16">
                     Update
                 </a>
-                <a th:href="@{/courses/delete/{id}(id=${course.id})}" class="btn btn-danger m-1">
+                <a th:href="@{/roles/delete/{id}(id=${role.id})}" class="btn btn-danger m-1">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
                          th:src="@{/images/icon_delete.png}" alt="" width="16" height="16">
                     Delete
@@ -96,34 +71,34 @@
             </td>
         </tr>
         </tbody>
-        <tbody th:if="${courses.page.content.empty}">
+        <tbody th:if="${roles.page.content.empty}">
         <tr>
-            <td class="text-center" colspan="7"><b>No courses found</b></td>
+            <td class="text-center" colspan="7"><b>No roles found</b></td>
         </tr>
         </tbody>
     </table>
 
     <nav aria-label="Page navigation" class="paging">
-        <ul class="pagination" th:if="${courses.page.totalPages > 1}">
-            <li class="page-item" th:classappend="${!courses.pagingNavData.isPrevEnabled()? 'disabled' : ''}">
+        <ul class="pagination" th:if="${roles.page.totalPages > 1}">
+            <li class="page-item" th:classappend="${!roles.pagingNavData.isPrevEnabled()? 'disabled' : ''}">
                 <a class="page-link"
-                   th:href="@{'?page=' + ${courses.pagingNavData.pageNumber - 1} + '&page_size=' + ${courses.pagingNavData.pageSize}}"
+                   th:href="@{'?page=' + ${roles.pagingNavData.pageNumber - 1} + '&page_size=' + ${roles.pagingNavData.pageSize}}"
                    tabindex="-1">Previous</a>
             </li>
-            <th:block th:each="item : ${courses.pagingNavData.getItems()}">
-                <li class="page-item" th:classappend="${item.index == courses.pagingNavData.pageNumber? 'active' : ''}"
+            <th:block th:each="item : ${roles.pagingNavData.getItems()}">
+                <li class="page-item" th:classappend="${item.index == roles.pagingNavData.pageNumber? 'active' : ''}"
                     th:if="${item.itemType.name() == 'PAGE'}">
                     <a class="page-link"
-                       th:href="@{'?page=' + ${item.index} + '&page_size=' + ${courses.pagingNavData.pageSize}}"
+                       th:href="@{'?page=' + ${item.index} + '&page_size=' + ${roles.pagingNavData.pageSize}}"
                        th:text="${item.index}"></a>
                 </li>
                 <li class="page-item disabled" th:if="${item.itemType.name() == 'DOTS'}">
                     <a class="page-link" href="#">...</a>
                 </li>
             </th:block>
-            <li class="page-item" th:classappend="${!courses.pagingNavData.isNextEnabled()? 'disabled' : ''}">
+            <li class="page-item" th:classappend="${!roles.pagingNavData.isNextEnabled()? 'disabled' : ''}">
                 <a class="page-link"
-                   th:href="@{'?page=' + ${courses.pagingNavData.pageNumber + 1} + '&page_size=' + ${courses.pagingNavData.pageSize}}">Next</a>
+                   th:href="@{'?page=' + ${roles.pagingNavData.pageNumber + 1} + '&page_size=' + ${roles.pagingNavData.pageSize}}">Next</a>
             </li>
         </ul>
     </nav>
