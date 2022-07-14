@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PagedList<AppUser> getUsers(int pageNumber, int pageSize) {
-        return new PagedList<>(userRepository.findAll(PageRequest.of(pageNumber, pageSize)));
+        return new PagedList<>(userRepository.findAll(PageRequest.of(pageNumber - 1, pageSize)));
     }
 
     @Override
