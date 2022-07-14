@@ -36,6 +36,7 @@ public class EdVantageApplication implements CommandLineRunner {
         courseService.addCourse(new CourseDTO("English for IT", 59.99));
         courseService.addCourse(new CourseDTO("Data Science", 109.90));
 */
+/*
         roleService.addRole(new RoleDTO(
                 "admin",
                 Set.of(UserFeature.values()))
@@ -64,7 +65,8 @@ public class EdVantageApplication implements CommandLineRunner {
                         UserFeature.UPDATE_USER
                 )
         ));
-
+*/
+/*
         userService.addUser(new AppUserDTO(
                 "Farrukh Khusainov",
                 "farrukh@mail.com",
@@ -107,5 +109,6 @@ public class EdVantageApplication implements CommandLineRunner {
                 "12345678",
                 3
         ));
+*/
     }
 }

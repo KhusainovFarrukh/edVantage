@@ -23,7 +23,7 @@ public class Role extends EntityWithId {
     @NotBlank
     @Column(unique = true)
     private String title;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(value = EnumType.STRING)
     @Column(name = "user_features")
     private Set<UserFeature> userFeatures = Collections.emptySet();

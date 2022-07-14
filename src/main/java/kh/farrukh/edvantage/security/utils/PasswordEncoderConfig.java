@@ -1,4 +1,4 @@
-package kh.farrukh.edvantage.security;
+package kh.farrukh.edvantage.security.utils;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

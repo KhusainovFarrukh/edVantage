@@ -7,7 +7,6 @@ import java.util.List;
 
 @Setter
 @Getter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class PagingNavData {
