@@ -9,6 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Set;
+
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
@@ -54,5 +57,10 @@ public class RoleServiceImpl implements RoleService {
     public void deleteRoleById(long id) {
         CheckUtils.checkRoleId(id, roleRepository);
         roleRepository.deleteById(id);
+    }
+
+    @Override
+    public List<UserFeature> getAllUserFeatures() {
+        return List.of(UserFeature.values());
     }
 }

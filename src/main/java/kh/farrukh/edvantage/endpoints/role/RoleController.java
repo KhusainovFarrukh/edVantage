@@ -28,6 +28,7 @@ public class RoleController {
     public String addRoleFrom(Model model) {
         RoleDTO roleDTO = new RoleDTO();
         model.addAttribute("role", roleDTO);
+        model.addAttribute("userFeatures", roleService.getAllUserFeatures());
         return "add_role";
     }
 
