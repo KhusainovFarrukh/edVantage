@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Edit user</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar sticky-top navbar-expand-md bg-primary navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">
+        <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/logo_edVantage.png"
+             th:src="@{/images/logo_edVantage.png}"
+             alt="" width="30" height="24"
+             class="d-inline-block align-text-top">
+        edVantage
+    </a>
+
+    <!-- Toggler/collapsible Button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Navbar links -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/courses}">All courses</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/courses/new}">Add course</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6 col-md-6 col-sm-6 container card">
+            <h1 class="text-center"> Update user </h1>
+            <div class="card-body">
+                <form th:action="@{/users/edit/{id}(id=${user.id})}" th:object="${user}" method="POST">
+                    <div class="form-group">
+                        <label> Name </label>
+                        <input
+                                type="text"
+                                name="name"
+                                th:field="*{name}"
+                                th:required="required"
+                                class="form-control"
+                                placeholder="Enter user name"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label> Email </label>
+                        <input
+                                type="email"
+                                name="email"
+                                th:field="*{email}"
+                                th:required="required"
+                                class="form-control"
+                                placeholder="Enter user email"
+                        />
+                    </div>
+<!--                    <div class="form-group">
+                        <label> Password </label>
+                        <input
+                                type="password"
+                                name="password"
+                                th:field="*{password}"
+                                th:required="required"
+                                class="form-control"
+                                placeholder="Enter user password"
+                        />
+                    </div>-->
+                    <div class="form-group">
+                        <label> Role </label>
+                        <div th:if="${roles != null and !roles.empty}">
+                            <select th:field="*{role}">
+                                <option th:each="role : ${roles}"
+                                        th:value="${role.id}"
+                                        th:text="${role.title}"></option>
+                            </select>
+                        </div>
+                        <div th:if="${roles == null or roles.empty}">
+                            <div>"No roles were found, please create some first"</div>
+                        </div>
+                    </div>
+
+                    <div class="box-footer">
+                        <button type="submit" class="btn btn-primary">
+                            Submit
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
