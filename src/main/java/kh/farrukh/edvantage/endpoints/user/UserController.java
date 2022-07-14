@@ -1,5 +1,6 @@
 package kh.farrukh.edvantage.endpoints.user;
 
+import kh.farrukh.edvantage.endpoints.role.RoleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import static kh.farrukh.edvantage.utils.constants.ApiEndpoints.ENDPOINT_USER;
 public class UserController {
 
     private final UserService userService;
+    private final RoleService roleService;
 
     @GetMapping
     public String usersList(
@@ -28,6 +30,7 @@ public class UserController {
     public String addUserForm(Model model) {
         AppUserDTO userDTO = new AppUserDTO();
         model.addAttribute("user", userDTO);
+        model.addAttribute("roles", roleService.getRolesList());
         return "add_user";
     }
 
@@ -40,6 +43,7 @@ public class UserController {
     @GetMapping("edit/{id}")
     public String editUserFrom(@PathVariable long id, Model model) {
         model.addAttribute("user", userService.getUserById(id));
+        model.addAttribute("roles", roleService.getRolesList());
         return "edit_user";
     }
 

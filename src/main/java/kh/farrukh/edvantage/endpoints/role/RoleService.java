@@ -3,9 +3,11 @@ package kh.farrukh.edvantage.endpoints.role;
 import kh.farrukh.edvantage.utils.pagination.PagedList;
 
 import java.util.List;
-import java.util.Set;
 
 public interface RoleService {
+
+    List<Role> getRolesList();
+
     PagedList<Role> getRoles(int pageNumber, int pageSize);
 
     Role getRoleById(long id);

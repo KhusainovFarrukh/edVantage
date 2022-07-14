@@ -10,13 +10,17 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
+
+    @Override
+    public List<Role> getRolesList() {
+        return roleRepository.findAll();
+    }
 
     @Override
     public PagedList<Role> getRoles(int pageNumber, int pageSize) {
