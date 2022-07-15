@@ -8,9 +8,6 @@ import kh.farrukh.edvantage.utils.checkers.CheckUtils;
 import kh.farrukh.edvantage.utils.pagination.PagedList;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,14 +16,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username).orElseThrow(
-                () -> new UsernameNotFoundException("User not found with username (email): " + username)
-        );
-    }
 
     @Override
     public PagedList<AppUser> getUsers(int pageNumber, int pageSize) {
@@ -44,7 +33,7 @@ public class UserServiceImpl implements UserService {
     public AppUser addUser(AppUserDTO userDTO) {
         CheckUtils.checkUserIsUnique(userDTO.getEmail(), userRepository);
         AppUser user = new AppUser(userDTO, roleRepository);
-        user.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        user.setPassword(userDTO.getPassword());
         return userRepository.save(user);
     }
 

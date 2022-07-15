@@ -1,9 +1,8 @@
 package kh.farrukh.edvantage.endpoints.user;
 
 import kh.farrukh.edvantage.utils.pagination.PagedList;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
     PagedList<AppUser> getUsers(int pageNumber, int pageSize);
 
