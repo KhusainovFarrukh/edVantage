@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class TokenService implements InitializingBean {
@@ -29,29 +28,28 @@ public class TokenService implements InitializingBean {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(TokenBody tokenBody, Date expireDate) {
+    public String createToken(String email, Date expireDate) {
         return Jwts.builder()
-                .setSubject(tokenBody.getEmail())
-                .claim("features", tokenBody.getFeatures())
+                .setSubject(email)
                 .signWith(key, SignatureAlgorithm.HS256)
                 .setExpiration(expireDate)
                 .compact();
     }
 
-    public String createToken(TokenBody tokenBody) {
+    public String createToken(String email) {
         return createToken(
-                tokenBody,
+                email,
                 new Date(System.currentTimeMillis() + tokenValidityMinutes * 60 * 1000)
         );
     }
 
-    public TokenBody verifyToken(String token) {
+    public String verifyToken(String token) {
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
 
-        return new TokenBody(claims.getSubject(), (List<String>) claims.get("features"));
+        return claims.getSubject();
     }
 }

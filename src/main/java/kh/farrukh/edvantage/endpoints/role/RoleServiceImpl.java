@@ -53,7 +53,7 @@ public class RoleServiceImpl implements RoleService {
         }
 
         existingRole.setTitle(roleDTO.getTitle());
-        existingRole.setUserFeatures(roleDTO.getUserFeatures());
+        existingRole.setPermissions(roleDTO.getPermissions());
         return roleRepository.save(existingRole);
     }
 
@@ -64,7 +64,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<UserFeature> getAllUserFeatures() {
-        return List.of(UserFeature.values());
+    public List<Permission> getAllUserFeatures() {
+        return List.of(Permission.values());
     }
 }

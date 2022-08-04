@@ -18,6 +18,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import static kh.farrukh.edvantage.security.TokenAuthorizationFilter.TOKEN_COOKIE;
+
 @Component
 @RequiredArgsConstructor
 public class CurrentUserResolver implements HandlerMethodArgumentResolver {
@@ -42,12 +44,12 @@ public class CurrentUserResolver implements HandlerMethodArgumentResolver {
         HttpServletRequest request = (HttpServletRequest) nativeWebRequest.getNativeRequest();
 
         Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals(TokenInterceptor.TOKEN_COOKIE))
+                .filter(cookie -> cookie.getName().equals(TOKEN_COOKIE))
                 .map(Cookie::getValue)
                 .findFirst()
                 .ifPresent(token -> {
-                    TokenBody tokenBody = tokenService.verifyToken(token);
-                    AppUser user = userRepository.findByEmail(tokenBody.getEmail()).orElseThrow(
+                    String email = tokenService.verifyToken(token);
+                    AppUser user = userRepository.findByEmail(email).orElseThrow(
                             () -> new BadRequestException("Email (token)")
                     );
 

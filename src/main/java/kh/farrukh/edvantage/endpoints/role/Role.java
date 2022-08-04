@@ -25,8 +25,8 @@ public class Role extends EntityWithId {
     private String title;
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(value = EnumType.STRING)
-    @Column(name = "user_features")
-    private Set<UserFeature> userFeatures = Collections.emptySet();
+    @Column(name = "permissions")
+    private Set<Permission> permissions = Collections.emptySet();
 
     public Role(RoleDTO roleDTO) {
         BeanUtils.copyProperties(roleDTO, this);

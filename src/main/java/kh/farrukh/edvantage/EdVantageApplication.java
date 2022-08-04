@@ -1,10 +1,11 @@
 package kh.farrukh.edvantage;
 
+import kh.farrukh.edvantage.endpoints.course.CourseDTO;
 import kh.farrukh.edvantage.endpoints.course.CourseService;
 import kh.farrukh.edvantage.endpoints.lesson.LessonService;
+import kh.farrukh.edvantage.endpoints.role.Permission;
 import kh.farrukh.edvantage.endpoints.role.RoleDTO;
 import kh.farrukh.edvantage.endpoints.role.RoleService;
-import kh.farrukh.edvantage.endpoints.role.UserFeature;
 import kh.farrukh.edvantage.endpoints.user.AppUserDTO;
 import kh.farrukh.edvantage.endpoints.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -29,44 +30,39 @@ public class EdVantageApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-/*
         courseService.addCourse(new CourseDTO("Kotlin basics", 166.99));
         courseService.addCourse(new CourseDTO("Spring Boot for professionals", 250.00));
         courseService.addCourse(new CourseDTO("From Java-8 to Java-18", 0.99));
         courseService.addCourse(new CourseDTO("English for IT", 59.99));
         courseService.addCourse(new CourseDTO("Data Science", 109.90));
-*/
-/*
         roleService.addRole(new RoleDTO(
                 "admin",
-                Set.of(UserFeature.values()))
+                Set.of(Permission.values()))
         );
         roleService.addRole(new RoleDTO(
                 "teacher",
                 Set.of(
-                        UserFeature.CREATE_COURSE,
-                        UserFeature.GET_COURSE,
-                        UserFeature.DELETE_COURSE,
-                        UserFeature.UPDATE_COURSE,
-                        UserFeature.CREATE_LESSON,
-                        UserFeature.GET_LESSON,
-                        UserFeature.UPDATE_LESSON,
-                        UserFeature.DELETE_LESSON,
-                        UserFeature.GET_USER,
-                        UserFeature.UPDATE_USER
+                        Permission.CREATE_COURSE,
+                        Permission.GET_COURSE,
+                        Permission.DELETE_COURSE,
+                        Permission.UPDATE_COURSE,
+                        Permission.CREATE_LESSON,
+                        Permission.GET_LESSON,
+                        Permission.UPDATE_LESSON,
+                        Permission.DELETE_LESSON,
+                        Permission.GET_USER,
+                        Permission.UPDATE_USER
                 )
         ));
         roleService.addRole(new RoleDTO(
                 "student",
                 Set.of(
-                        UserFeature.GET_COURSE,
-                        UserFeature.GET_LESSON,
-                        UserFeature.GET_USER,
-                        UserFeature.UPDATE_USER
+                        Permission.GET_COURSE,
+                        Permission.GET_LESSON,
+                        Permission.GET_USER,
+                        Permission.UPDATE_USER
                 )
         ));
-*/
-/*
         userService.addUser(new AppUserDTO(
                 "Farrukh Khusainov",
                 "farrukh@mail.com",
@@ -109,6 +105,5 @@ public class EdVantageApplication implements CommandLineRunner {
                 "12345678",
                 3
         ));
-*/
     }
 }

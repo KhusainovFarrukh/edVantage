@@ -18,5 +18,5 @@ public interface RoleService {
 
     void deleteRoleById(long id);
 
-    List<UserFeature> getAllUserFeatures();
+    List<Permission> getAllUserFeatures();
 }

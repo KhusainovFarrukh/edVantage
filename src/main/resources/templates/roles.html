@@ -48,7 +48,7 @@
         <tr>
             <th> #</th>
             <th> Title</th>
-            <th> Features</th>
+            <th> Permissions</th>
             <th> Actions</th>
         </tr>
         </thead>
@@ -56,7 +56,7 @@
         <tr th:each="role: ${roles.page}">
             <td th:text="${roles.pagingNavData.pageSize * (roles.pagingNavData.pageNumber - 1) + roleStat.count}"></td>
             <td th:text="${role.title}"></td>
-            <td th:text="${#strings.listJoin(role.userFeatures, ', ')}"></td>
+            <td th:text="${#strings.listJoin(role.permissions, ', ')}"></td>
             <td>
                 <a th:href="@{/roles/edit/{id}(id=${role.id})}" class="btn btn-success m-1">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
