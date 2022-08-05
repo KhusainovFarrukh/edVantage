@@ -15,7 +15,7 @@ import java.util.List;
 public class LessonDTO {
     @NotBlank
     private String title;
-    private String author;
+    private long authorId;
     @JsonProperty("text_body")
     private String textBody;
     private List<String> videos = Collections.emptyList();

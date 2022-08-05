@@ -1,5 +1,6 @@
 package kh.farrukh.edvantage.endpoints.lesson;
 
+import kh.farrukh.edvantage.jwt.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -39,7 +40,12 @@ public class LessonController {
 
     @PreAuthorize("hasAuthority('CREATE_LESSON')")
     @PostMapping
-    public String addLesson(@PathVariable long courseId, @ModelAttribute("lesson") LessonDTO lessonDTO) {
+    public String addLesson(
+            @CurrentUser Long userId,
+            @PathVariable long courseId,
+            @ModelAttribute("lesson") LessonDTO lessonDTO
+    ) {
+        lessonDTO.setAuthorId(userId);
         lessonService.addLesson(courseId, lessonDTO);
         return "redirect:/courses/" + courseId + "/lessons";
     }

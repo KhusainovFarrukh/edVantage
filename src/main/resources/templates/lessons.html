@@ -67,7 +67,7 @@
         <tr th:each="lesson: ${lessons.page}">
             <td th:text="${lessons.pagingNavData.pageSize * (lessons.pagingNavData.pageNumber - 1) + lessonStat.count}"></td>
             <td th:text="${lesson.title}"></td>
-            <td th:text="${lesson.author}"></td>
+            <td th:text="${lesson.author.name}"></td>
             <td th:text="${lesson.textBody}"></td>
             <td th:text="${lesson.course.title}"></td>
             <td th:text="${lesson.videos.size}"></td>
