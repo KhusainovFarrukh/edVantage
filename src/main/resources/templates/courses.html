@@ -29,7 +29,8 @@
                 <a class="nav-link" th:href="@{/courses}">All courses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/courses/new}">Add course</a>
+                <a th:if="${currentPermissions.contains('CREATE_COURSE')}"
+                   class="nav-link" th:href="@{/courses/new}">Add course</a>
             </li>
         </ul>
     </div>
@@ -53,10 +54,11 @@
     </div>
     <div class="row">
         <div class="col-lg-3 align-self-end">
-            <a th:href="@{courses/new}" class="btn btn-primary mb-3 mt-3">Add course</a>
+            <a th:if="${currentPermissions.contains('CREATE_COURSE')}" th:href="@{courses/new}"
+               class="btn btn-primary mt-3">Add course</a>
         </div>
     </div>
-    <table class="table table-bordered table-striped table-primary">
+    <table class="table table-bordered table-striped table-primary mt-3">
         <script>
             function lessonsCountClicked(value) {
                 location.href = "courses/" + value + "/lessons";
@@ -70,7 +72,9 @@
             <th> Lessons count</th>
             <th> Teachers count</th>
             <th> Students count</th>
-            <th> Actions</th>
+            <th th:if="${currentPermissions.contains('UPDATE_COURSE') || currentPermissions.contains('DELETE_COURSE')}">
+                Actions
+            </th>
         </tr>
         </thead>
         <tbody th:if="${!courses.page.content.empty}">
@@ -82,13 +86,15 @@
                 th:attr="onclick=|lessonsCountClicked('${course.id}')|"></td>
             <td th:text="${course.teachers.size}"></td>
             <td th:text="${course.students.size}"></td>
-            <td>
-                <a th:href="@{/courses/edit/{id}(id=${course.id})}" class="btn btn-success m-1">
+            <td th:if="${currentPermissions.contains('UPDATE_COURSE') || currentPermissions.contains('DELETE_COURSE')}">
+                <a th:if="${currentPermissions.contains('UPDATE_COURSE')}"
+                   th:href="@{/courses/edit/{id}(id=${course.id})}" class="btn btn-success m-1">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
                          th:src="@{/images/icon_edit.png}" alt="" width="16" height="16">
                     Update
                 </a>
-                <a th:href="@{/courses/delete/{id}(id=${course.id})}" class="btn btn-danger m-1">
+                <a th:if="${currentPermissions.contains('DELETE_COURSE')}"
+                   th:href="@{/courses/delete/{id}(id=${course.id})}" class="btn btn-danger m-1">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
                          th:src="@{/images/icon_delete.png}" alt="" width="16" height="16">
                     Delete

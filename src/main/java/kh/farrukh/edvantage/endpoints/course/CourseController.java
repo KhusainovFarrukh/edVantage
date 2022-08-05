@@ -1,7 +1,8 @@
 package kh.farrukh.edvantage.endpoints.course;
 
+import kh.farrukh.edvantage.endpoints.role.Role;
 import kh.farrukh.edvantage.endpoints.user.UserService;
-import kh.farrukh.edvantage.endpoints.user.UserServiceImpl;
+import kh.farrukh.edvantage.jwt.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -22,11 +23,13 @@ public class CourseController {
     @PreAuthorize("hasAuthority('GET_COURSE')")
     @GetMapping
     public String coursesList(
+            @CurrentUser Role role,
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
             @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
             Model model
     ) {
         model.addAttribute("courses", courseService.getCourses(pageNumber, pageSize));
+        model.addAttribute("currentPermissions", role.getPermissions().stream().map(Enum::name).toList());
         return "courses";
     }
 
