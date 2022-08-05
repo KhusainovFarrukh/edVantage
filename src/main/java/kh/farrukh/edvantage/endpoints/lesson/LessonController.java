@@ -1,5 +1,6 @@
 package kh.farrukh.edvantage.endpoints.lesson;
 
+import kh.farrukh.edvantage.endpoints.role.Role;
 import kh.farrukh.edvantage.jwt.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,6 +20,7 @@ public class LessonController {
     @PreAuthorize("hasAuthority('GET_LESSON')")
     @GetMapping
     public String lessonsList(
+            @CurrentUser Role role,
             @PathVariable long courseId,
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
             @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
@@ -26,6 +28,7 @@ public class LessonController {
     ) {
         model.addAttribute("course_id", courseId);
         model.addAttribute("lessons", lessonService.getLessonsOfCourse(courseId, pageNumber, pageSize));
+        model.addAttribute("currentPermissions", role.getPermissions().stream().map(Enum::name).toList());
         return "lessons";
     }
 
