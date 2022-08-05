@@ -29,28 +29,32 @@
                 <a class="nav-link" th:href="@{/courses}">All courses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/courses/new}">Add course</a>
+                <a th:if="${currentPermissions.contains('CREATE_COURSE')}"
+                   class="nav-link" th:href="@{/courses/new}">Add course</a>
             </li>
         </ul>
     </div>
 </nav>
 <div class="container-fluid">
     <div class="row">
-        <h2>Roles</h2>
+        <h2>Users</h2>
     </div>
     <div class="row">
         <div class="col-lg-3 align-self-end">
-            <a th:href="@{users/new}" class="btn btn-primary mb-3 mt-3">Add user</a>
+            <a th:if="${currentPermissions.contains('CREATE_USER')}" th:href="@{users/new}"
+               class="btn btn-primary mt-3">Add user</a>
         </div>
     </div>
-    <table class="table table-bordered table-striped table-primary">
+    <table class="table table-bordered table-striped table-primary mt-3">
         <thead class="table-primary position-sticky">
         <tr>
             <th> #</th>
             <th> Name</th>
             <th> Email</th>
             <th> Role</th>
-            <th> Actions</th>
+            <th th:if="${currentPermissions.contains('UPDATE_USER') || currentPermissions.contains('DELETE_USER')}">
+                Actions
+            </th>
         </tr>
         </thead>
         <tbody th:if="${!users.page.content.empty}">
@@ -59,13 +63,15 @@
             <td th:text="${user.name}">
             <td th:text="${user.email}"></td>
             <td th:text="${user.role.title}"></td>
-            <td>
-                <a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-success m-1">
+            <td th:if="${currentPermissions.contains('UPDATE_USER') || currentPermissions.contains('DELETE_USER')}">
+                <a th:if="${currentPermissions.contains('UPDATE_USER')}" th:href="@{/users/edit/{id}(id=${user.id})}"
+                   class="btn btn-success m-1">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
                          th:src="@{/images/icon_edit.png}" alt="" width="16" height="16">
                     Update
                 </a>
-                <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-danger m-1">
+                <a th:if="${currentPermissions.contains('DELETE_USER')}" th:href="@{/users/delete/{id}(id=${user.id})}"
+                   class="btn btn-danger m-1">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
                          th:src="@{/images/icon_delete.png}" alt="" width="16" height="16">
                     Delete

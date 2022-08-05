@@ -1,6 +1,8 @@
 package kh.farrukh.edvantage.endpoints.user;
 
+import kh.farrukh.edvantage.endpoints.role.Role;
 import kh.farrukh.edvantage.endpoints.role.RoleService;
+import kh.farrukh.edvantage.jwt.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -20,11 +22,13 @@ public class UserController {
     @PreAuthorize("hasAuthority('GET_USER')")
     @GetMapping
     public String usersList(
+            @CurrentUser Role role,
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
             @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
             Model model
     ) {
         model.addAttribute("users", userService.getUsers(pageNumber, pageSize));
+        model.addAttribute("currentPermissions", role.getPermissions().stream().map(Enum::name).toList());
         return "users";
     }
 
