@@ -1,6 +1,7 @@
 package kh.farrukh.edvantage.endpoints.role;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ public class RoleController {
 
     private final RoleService roleService;
 
+    @PreAuthorize("hasAuthority('GET_ROLE')")
     @GetMapping
     public String rolesList(
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
@@ -24,6 +26,7 @@ public class RoleController {
         return "roles";
     }
 
+    @PreAuthorize("hasAuthority('CREATE_ROLE')")
     @GetMapping("/new")
     public String addRoleFrom(Model model) {
         RoleDTO roleDTO = new RoleDTO();
@@ -32,12 +35,14 @@ public class RoleController {
         return "add_role";
     }
 
+    @PreAuthorize("hasAuthority('CREATE_ROLE')")
     @PostMapping
     public String addRole(@ModelAttribute("role") RoleDTO roleDTO) {
         roleService.addRole(roleDTO);
         return "redirect:/roles";
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_ROLE')")
     @GetMapping("edit/{id}")
     public String editRoleFrom(@PathVariable long id, Model model) {
         model.addAttribute("role", roleService.getRoleById(id));
@@ -45,12 +50,14 @@ public class RoleController {
         return "edit_role";
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_ROLE')")
     @PostMapping("edit/{id}")
     public String updateRole(@PathVariable long id, @ModelAttribute("role") RoleDTO roleDTO) {
         roleService.updateRole(id, roleDTO);
         return "redirect:/roles";
     }
 
+    @PreAuthorize("hasAuthority('DELETE_ROLE')")
     @GetMapping("delete/{id}")
     public String deleteRole(@PathVariable long id) {
         roleService.deleteRoleById(id);

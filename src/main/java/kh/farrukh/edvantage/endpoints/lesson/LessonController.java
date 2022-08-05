@@ -1,6 +1,7 @@
 package kh.farrukh.edvantage.endpoints.lesson;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ public class LessonController {
 
     private final LessonService lessonService;
 
+    @PreAuthorize("hasAuthority('GET_LESSON')")
     @GetMapping
     public String lessonsList(
             @PathVariable long courseId,
@@ -26,35 +28,40 @@ public class LessonController {
         return "lessons";
     }
 
+    @PreAuthorize("hasAuthority('CREATE_LESSON')")
     @GetMapping("/new")
-    public String addLessonFrom(@PathVariable long courseId, Model model) {
+    public String addLessonForm(@PathVariable long courseId, Model model) {
         LessonDTO lessonDTO = new LessonDTO();
         model.addAttribute("course_id", courseId);
         model.addAttribute("lesson", lessonDTO);
         return "add_lesson";
     }
 
+    @PreAuthorize("hasAuthority('CREATE_LESSON')")
     @PostMapping
     public String addLesson(@PathVariable long courseId, @ModelAttribute("lesson") LessonDTO lessonDTO) {
         lessonService.addLesson(courseId, lessonDTO);
         return "redirect:/courses/" + courseId + "/lessons";
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_LESSON')")
     @GetMapping("edit/{id}")
-    public String editLessonFrom(@PathVariable long courseId, @PathVariable long id, Model model) {
+    public String editLessonForm(@PathVariable long courseId, @PathVariable long id, Model model) {
         model.addAttribute("course_id", courseId);
         model.addAttribute("lesson", lessonService.getLessonById(courseId, id));
         return "edit_lesson";
     }
 
+    @PreAuthorize("hasAuthority('UPDATE_LESSON')")
     @PostMapping("edit/{id}")
-    public String updateCourse(@PathVariable long courseId, @PathVariable long id, @ModelAttribute("course") LessonDTO lessonDTO) {
+    public String updateLesson(@PathVariable long courseId, @PathVariable long id, @ModelAttribute("course") LessonDTO lessonDTO) {
         lessonService.updateLesson(courseId, id, lessonDTO);
         return "redirect:/courses/" + courseId + "/lessons";
     }
 
+    @PreAuthorize("hasAuthority('DELETE_LESSON')")
     @GetMapping("delete/{id}")
-    public String deleteCourse(@PathVariable long courseId, @PathVariable long id) {
+    public String deleteLesson(@PathVariable long courseId, @PathVariable long id) {
         lessonService.deleteLessonById(courseId, id);
         return "redirect:/courses/" + courseId + "/lessons";
     }

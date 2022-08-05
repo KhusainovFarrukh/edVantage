@@ -29,7 +29,7 @@ public class CourseController {
 
     @PreAuthorize("hasAuthority('CREATE_COURSE')")
     @GetMapping("/new")
-    public String addCourseFrom(Model model) {
+    public String addCourseForm(Model model) {
         CourseDTO courseDTO = new CourseDTO();
         model.addAttribute("course", courseDTO);
         return "add_course";
@@ -44,7 +44,7 @@ public class CourseController {
 
     @PreAuthorize("hasAuthority('UPDATE_COURSE')")
     @GetMapping("edit/{id}")
-    public String editCourseFrom(@PathVariable long id, Model model) {
+    public String editCourseForm(@PathVariable long id, Model model) {
         model.addAttribute("course", courseService.getCourseById(id));
         return "edit_course";
     }
