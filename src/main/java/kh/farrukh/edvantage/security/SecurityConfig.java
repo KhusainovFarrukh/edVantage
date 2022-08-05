@@ -23,7 +23,8 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(
             HttpSecurity http,
             TokenAuthorizationFilter tokenAuthorizationFilter,
-            AuthenticationFilterConfigurer authenticationFilterConfigurer
+            AuthenticationFilterConfigurer authenticationFilterConfigurer,
+            TokenAccessDeniedHandler accessDeniedHandler
     ) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -31,21 +32,21 @@ public class SecurityConfig {
         http.apply(authenticationFilterConfigurer);
         http.addFilterBefore(tokenAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
+        // TODO: 8/5/22 access denied handler not working
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+
         http.formLogin();
-        http.logout(logout -> logout
-                .logoutSuccessHandler((request, response, authentication) -> {
-                            Cookie cookie = new Cookie(TOKEN_COOKIE, "");
-                            cookie.setPath("/");
-                            cookie.setMaxAge(0);
+        http.logout(logout -> logout.logoutSuccessHandler((request, response, authentication) -> {
+                    Cookie cookie = new Cookie(TOKEN_COOKIE, "");
+                    cookie.setPath("/");
+                    cookie.setMaxAge(0);
 
-                            response.addCookie(cookie);
+                    response.addCookie(cookie);
 
-                            response.sendRedirect(ENDPOINT_LOGIN);
-                        }
-                )
+                    response.sendRedirect(ENDPOINT_LOGIN);
+                })
         );
 
         return http.build();
     }
-
 }
