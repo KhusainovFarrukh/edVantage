@@ -1,5 +1,7 @@
 package kh.farrukh.edvantage.endpoints.course;
 
+import kh.farrukh.edvantage.endpoints.user.UserService;
+import kh.farrukh.edvantage.endpoints.user.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import static kh.farrukh.edvantage.utils.constants.ApiEndpoints.ENDPOINT_COURSE;
 public class CourseController {
 
     private final CourseService courseService;
+    private final UserService userService;
 
     // TODO: 8/4/22 optimize code
     @PreAuthorize("hasAuthority('GET_COURSE')")
@@ -32,6 +35,7 @@ public class CourseController {
     public String addCourseForm(Model model) {
         CourseDTO courseDTO = new CourseDTO();
         model.addAttribute("course", courseDTO);
+        model.addAttribute("users", userService.getUsersList());
         return "add_course";
     }
 
@@ -46,6 +50,7 @@ public class CourseController {
     @GetMapping("edit/{id}")
     public String editCourseForm(@PathVariable long id, Model model) {
         model.addAttribute("course", courseService.getCourseById(id));
+        model.addAttribute("users", userService.getUsersList());
         return "edit_course";
     }
 

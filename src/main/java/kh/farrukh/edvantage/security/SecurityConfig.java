@@ -35,6 +35,7 @@ public class SecurityConfig {
         // TODO: 8/5/22 access denied handler not working
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
+        // TODO: 8/5/22 needs endpoint for register
         http.formLogin();
         http.logout(logout -> logout.logoutSuccessHandler((request, response, authentication) -> {
                     Cookie cookie = new Cookie(TOKEN_COOKIE, "");

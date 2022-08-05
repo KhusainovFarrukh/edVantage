@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -31,6 +33,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public PagedList<AppUser> getUsers(int pageNumber, int pageSize) {
         return new PagedList<>(userRepository.findAll(PageRequest.of(pageNumber - 1, pageSize)));
+    }
+
+    @Override
+    public List<AppUser> getUsersList() {
+        return userRepository.findAll();
     }
 
     @Override
