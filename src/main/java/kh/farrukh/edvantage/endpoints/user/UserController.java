@@ -32,7 +32,6 @@ public class UserController {
         return "users";
     }
 
-    @PreAuthorize("hasAuthority('CREATE_USER')")
     @GetMapping("/new")
     public String addUserForm(Model model) {
         AppUserDTO userDTO = new AppUserDTO();
@@ -41,7 +40,6 @@ public class UserController {
         return "add_user";
     }
 
-    @PreAuthorize("hasAuthority('CREATE_USER')")
     @PostMapping
     public String addUser(@ModelAttribute("user") AppUserDTO userDTO) {
         userService.addUser(userDTO);
