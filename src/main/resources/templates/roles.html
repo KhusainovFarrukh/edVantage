@@ -29,7 +29,8 @@
                 <a class="nav-link" th:href="@{/courses}">All courses</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" th:href="@{/courses/new}">Add course</a>
+                <a th:if="${currentPermissions.contains('CREATE_COURSE')}"
+                   class="nav-link" th:href="@{/courses/new}">Add course</a>
             </li>
         </ul>
     </div>
@@ -40,16 +41,19 @@
     </div>
     <div class="row">
         <div class="col-lg-3 align-self-end">
-            <a th:href="@{roles/new}" class="btn btn-primary mb-3 mt-3">Add role</a>
+            <a th:if="${currentPermissions.contains('CREATE_ROLE')}" th:href="@{roles/new}"
+               class="btn btn-primary mt-3">Add role</a>
         </div>
     </div>
-    <table class="table table-bordered table-striped table-primary">
+    <table class="table table-bordered table-striped table-primary mt-3">
         <thead class="table-primary position-sticky">
         <tr>
             <th> #</th>
             <th> Title</th>
             <th> Permissions</th>
-            <th> Actions</th>
+            <th th:if="${currentPermissions.contains('UPDATE_ROLE') || currentPermissions.contains('DELETE_ROLE')}">
+                Actions
+            </th>
         </tr>
         </thead>
         <tbody th:if="${!roles.page.content.empty}">
@@ -57,13 +61,15 @@
             <td th:text="${roles.pagingNavData.pageSize * (roles.pagingNavData.pageNumber - 1) + roleStat.count}"></td>
             <td th:text="${role.title}"></td>
             <td th:text="${#strings.listJoin(role.permissions, ', ')}"></td>
-            <td>
-                <a th:href="@{/roles/edit/{id}(id=${role.id})}" class="btn btn-success m-1">
+            <td th:if="${currentPermissions.contains('UPDATE_ROLE') || currentPermissions.contains('DELETE_ROLE')}">
+                <a th:if="${currentPermissions.contains('UPDATE_ROLE')}" th:href="@{/roles/edit/{id}(id=${role.id})}"
+                   class="btn btn-success m-1">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
                          th:src="@{/images/icon_edit.png}" alt="" width="16" height="16">
                     Update
                 </a>
-                <a th:href="@{/roles/delete/{id}(id=${role.id})}" class="btn btn-danger m-1">
+                <a th:if="${currentPermissions.contains('DELETE_ROLE')}"
+                   th:href="@{/roles/delete/{id}(id=${role.id})}" class="btn btn-danger m-1">
                     <img src="/home/farrukh_kh/IdeaProjects/edVantage/src/main/resources/static/images/icon_edit.png"
                          th:src="@{/images/icon_delete.png}" alt="" width="16" height="16">
                     Delete

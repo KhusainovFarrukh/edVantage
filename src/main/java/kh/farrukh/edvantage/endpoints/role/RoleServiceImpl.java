@@ -64,7 +64,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public List<Permission> getAllUserFeatures() {
+    public List<Permission> getAllPermissions() {
         return List.of(Permission.values());
     }
 }

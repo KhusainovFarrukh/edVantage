@@ -1,5 +1,6 @@
 package kh.farrukh.edvantage.endpoints.role;
 
+import kh.farrukh.edvantage.jwt.CurrentUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -18,11 +19,13 @@ public class RoleController {
     @PreAuthorize("hasAuthority('GET_ROLE')")
     @GetMapping
     public String rolesList(
+            @CurrentUser Role role,
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
             @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
             Model model
     ) {
         model.addAttribute("roles", roleService.getRoles(pageNumber, pageSize));
+        model.addAttribute("currentPermissions", role.getPermissions().stream().map(Enum::name).toList());
         return "roles";
     }
 
@@ -31,7 +34,7 @@ public class RoleController {
     public String addRoleFrom(Model model) {
         RoleDTO roleDTO = new RoleDTO();
         model.addAttribute("role", roleDTO);
-        model.addAttribute("userFeatures", roleService.getAllUserFeatures());
+        model.addAttribute("permissions", roleService.getAllPermissions());
         return "add_role";
     }
 
@@ -46,7 +49,7 @@ public class RoleController {
     @GetMapping("edit/{id}")
     public String editRoleFrom(@PathVariable long id, Model model) {
         model.addAttribute("role", roleService.getRoleById(id));
-        model.addAttribute("userFeatures", roleService.getAllUserFeatures());
+        model.addAttribute("permissions", roleService.getAllPermissions());
         return "edit_role";
     }
 

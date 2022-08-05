@@ -56,14 +56,14 @@
                     </div>
 
                     <div class="form-group">
-                        <label> Features </label>
-                        <div th:each="feature : ${userFeatures}">
+                        <label> Permissions </label>
+                        <div th:each="permission : ${permissions}">
                             <input
                                     type="checkbox"
-                                    th:value="${feature.name}"
-                                    th:text="${feature.name}"
-                                    name="userFeatures"
-                                    th:field="*{userFeatures}"
+                                    th:value="${permission.name}"
+                                    th:text="${permission.name}"
+                                    name="permissions"
+                                    th:field="*{permissions}"
                                     class="form-control"
                             />
                         </div>
