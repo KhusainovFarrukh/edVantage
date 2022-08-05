@@ -16,7 +16,7 @@ public class CourseController {
     private final CourseService courseService;
 
     // TODO: 8/4/22 optimize code
-    @PreAuthorize("hasAuthority(\"GET_COURSE\")")
+    @PreAuthorize("hasAuthority('GET_COURSE')")
     @GetMapping
     public String coursesList(
             @RequestParam(value = "page", required = false, defaultValue = "1") int pageNumber,
@@ -27,7 +27,7 @@ public class CourseController {
         return "courses";
     }
 
-    @PreAuthorize("hasAuthority(\"CREATE_COURSE\")")
+    @PreAuthorize("hasAuthority('CREATE_COURSE')")
     @GetMapping("/new")
     public String addCourseFrom(Model model) {
         CourseDTO courseDTO = new CourseDTO();
@@ -35,28 +35,28 @@ public class CourseController {
         return "add_course";
     }
 
-    @PreAuthorize("hasAuthority(\"CREATE_COURSE\")")
+    @PreAuthorize("hasAuthority('CREATE_COURSE')")
     @PostMapping
     public String addCourse(@ModelAttribute("course") CourseDTO courseDTO) {
         courseService.addCourse(courseDTO);
         return "redirect:/courses";
     }
 
-    @PreAuthorize("hasAuthority(\"UPDATE_COURSE\")")
+    @PreAuthorize("hasAuthority('UPDATE_COURSE')")
     @GetMapping("edit/{id}")
     public String editCourseFrom(@PathVariable long id, Model model) {
         model.addAttribute("course", courseService.getCourseById(id));
         return "edit_course";
     }
 
-    @PreAuthorize("hasAuthority(\"UPDATE_COURSE\")")
+    @PreAuthorize("hasAuthority('UPDATE_COURSE')")
     @PostMapping("edit/{id}")
     public String updateCourse(@PathVariable long id, @ModelAttribute("course") CourseDTO courseDTO) {
         courseService.updateCourse(id, courseDTO);
         return "redirect:/courses";
     }
 
-    @PreAuthorize("hasAuthority(\"DELETE_COURSE\")")
+    @PreAuthorize("hasAuthority('DELETE_COURSE')")
     @GetMapping("delete/{id}")
     public String deleteCourse(@PathVariable long id) {
         courseService.deleteCourseById(id);

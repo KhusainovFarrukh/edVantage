@@ -3,6 +3,7 @@ package kh.farrukh.edvantage.security;
 import kh.farrukh.edvantage.endpoints.user.AppUser;
 import kh.farrukh.edvantage.endpoints.user.UserRepository;
 import kh.farrukh.edvantage.exception.custom_exceptions.ResourceNotFoundException;
+import kh.farrukh.edvantage.exception.custom_exceptions.WrongEmailPasswordException;
 import kh.farrukh.edvantage.jwt.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +12,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.Cookie;
@@ -27,6 +29,7 @@ public class EmailPasswordAuthenticationFilter extends UsernamePasswordAuthentic
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final TokenService tokenService;
+    private final HandlerExceptionResolver resolver;
 
     @Override
     public Authentication attemptAuthentication(
@@ -61,5 +64,23 @@ public class EmailPasswordAuthenticationFilter extends UsernamePasswordAuthentic
 
         response.addCookie(cookie);
         response.sendRedirect(ENDPOINT_COURSE);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            AuthenticationException failed
+    ) {
+        // TODO: 8/5/22 don't redirect to error page, show modal (dialog)
+        if (userRepository.existsByEmail(request.getParameter("username"))) {
+            resolver.resolveException(
+                    request, response, null, new WrongEmailPasswordException(WrongEmailPasswordException.Type.PASSWORD)
+            );
+        } else {
+            resolver.resolveException(
+                    request, response, null, new WrongEmailPasswordException(WrongEmailPasswordException.Type.EMAIL)
+            );
+        }
     }
 }
