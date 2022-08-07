@@ -12,8 +12,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.ErrorPageRegistrar;
+import org.springframework.context.annotation.Bean;
 
 import java.util.Set;
+
+import static kh.farrukh.edvantage.utils.constants.ApiEndpoints.ENDPOINT_ERROR;
 
 @SpringBootApplication
 @RequiredArgsConstructor
@@ -23,6 +28,11 @@ public class EdVantageApplication implements CommandLineRunner {
     private final LessonService lessonService;
     private final RoleService roleService;
     private final UserService userService;
+
+    @Bean
+    public ErrorPageRegistrar errorPageRegistrar() {
+        return registry -> registry.addErrorPages(new ErrorPage(ENDPOINT_ERROR));
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(EdVantageApplication.class, args);

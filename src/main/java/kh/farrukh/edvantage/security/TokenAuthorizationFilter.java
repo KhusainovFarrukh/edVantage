@@ -14,14 +14,13 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Optional;
 
+import static kh.farrukh.edvantage.utils.constants.ApiEndpoints.ENDPOINT_ERROR;
 import static kh.farrukh.edvantage.utils.constants.ApiEndpoints.ENDPOINT_LOGIN;
 
 @Component
@@ -45,7 +44,8 @@ public class TokenAuthorizationFilter extends OncePerRequestFilter {
 
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getRequestURI().equals(ENDPOINT_LOGIN);
+        return request.getRequestURI().equals(ENDPOINT_LOGIN) ||
+                request.getRequestURI().equals(ENDPOINT_ERROR);
     }
 
     @Override
@@ -53,35 +53,34 @@ public class TokenAuthorizationFilter extends OncePerRequestFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
-    ) throws ServletException, IOException {
+    ) throws IOException {
 
-        Optional<String> optional = Arrays.stream(request.getCookies())
-                .filter(cookie -> cookie.getName().equals(TOKEN_COOKIE))
-                .findFirst()
-                .map(Cookie::getValue);
+        try {
+            String token = Arrays.stream(request.getCookies())
+                    .filter(cookie -> cookie.getName().equals(TOKEN_COOKIE))
+                    .findFirst()
+                    .map(Cookie::getValue)
+                    .orElseThrow(() -> new BadRequestException("Token"));
 
-        if (optional.isPresent()) {
-            try {
-                String email = tokenService.verifyToken(optional.get());
+            String email = tokenService.verifyToken(token);
 
-                AppUser user = userRepository.findByEmail(email).orElseThrow(
-                        () -> new ResourceNotFoundException("User", "email", email)
-                );
+            AppUser user = userRepository.findByEmail(email).orElseThrow(
+                    () -> new ResourceNotFoundException("User", "email", email)
+            );
 
-                request.setAttribute("login", user);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        user.getUsername(), null, user.getAuthorities()
-                );
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-                filterChain.doFilter(request, response);
-            } catch (JwtException e) {
-                e.printStackTrace();
+            request.setAttribute("login", user);
+            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                    user.getUsername(), null, user.getAuthorities()
+            );
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            filterChain.doFilter(request, response);
+        } catch (JwtException e) {
+            e.printStackTrace();
 
-                SecurityContextHolder.clearContext();
-                // TODO: 8/5/22 add return-url
-                response.sendRedirect(ENDPOINT_LOGIN);
-            }
-        } else {
+            SecurityContextHolder.clearContext();
+            // TODO: 8/5/22 add return-url
+            response.sendRedirect(ENDPOINT_LOGIN);
+        } catch (Exception e) {
             resolver.resolveException(request, response, null, new BadRequestException("Token"));
         }
     }

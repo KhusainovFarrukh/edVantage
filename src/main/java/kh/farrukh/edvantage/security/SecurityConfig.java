@@ -32,7 +32,6 @@ public class SecurityConfig {
         http.apply(authenticationFilterConfigurer);
         http.addFilterBefore(tokenAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
 
-        // TODO: 8/5/22 access denied handler not working
         http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
         // TODO: 8/5/22 needs endpoint for register

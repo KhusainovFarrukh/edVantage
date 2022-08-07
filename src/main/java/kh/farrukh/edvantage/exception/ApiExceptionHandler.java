@@ -2,55 +2,30 @@ package kh.farrukh.edvantage.exception;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.time.ZonedDateTime;
+import java.io.IOException;
 import java.util.Locale;
 
 @ControllerAdvice
 @RequiredArgsConstructor
 public class ApiExceptionHandler {
-    // TODO: 8/4/22 currently returning json (change ApiExceptionHandler), needs /custom-error page and
-    //  overriding default /error page
 
     private final MessageSource messageSource;
 
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<Object> handleApiException(ApiException exception, Locale locale) {
+    public ModelAndView handleApiException(ApiException exception, Locale locale) {
         exception.printStackTrace();
-        return new ResponseEntity<>(
-                new ErrorResponse(
-                        messageSource.getMessage(
-                                exception.getMessageId(),
-                                exception.getMessageArgs(),
-                                locale
-                        ),
-                        exception.getHttpStatus(),
-                        exception.getHttpStatus().value(),
-                        ZonedDateTime.now()
-                ),
-                exception.getHttpStatus()
-        );
-    }
+        ModelAndView errorPage = new ModelAndView("error");
 
-    // TODO: 8/6/22 override default /error page instead of this
-//    @ExceptionHandler(Exception.class)
-//    public ResponseEntity<Object> handleUnknownException(Exception exception, Locale locale) {
-//        exception.printStackTrace();
-//        return new ResponseEntity<>(
-//                new ErrorResponse(
-//                        messageSource.getMessage(
-//                                EXCEPTION_UNKNOWN,
-//                                null,
-//                                locale
-//                        ) + ": " + exception.getMessage(),
-//                        HttpStatus.INTERNAL_SERVER_ERROR,
-//                        HttpStatus.INTERNAL_SERVER_ERROR.value(),
-//                        ZonedDateTime.now()
-//                ),
-//                HttpStatus.INTERNAL_SERVER_ERROR
-//        );
-//    }
+        String message = messageSource.getMessage(exception.getMessageId(), exception.getMessageArgs(), locale);
+
+        errorPage.addObject("code", exception.getHttpStatus().value());
+        errorPage.addObject("message", message);
+
+        // TODO: 8/7/22 returning empty page for security related custom exceptions
+        return errorPage;
+    }
 }
