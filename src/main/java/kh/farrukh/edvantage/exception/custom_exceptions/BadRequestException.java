@@ -1,6 +1,6 @@
 package kh.farrukh.edvantage.exception.custom_exceptions;
 
-import kh.farrukh.edvantage.exception.ApiException;
+import kh.farrukh.edvantage.exception.AppException;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -13,7 +13,7 @@ import static kh.farrukh.edvantage.utils.constants.ExceptionMessages.EXCEPTION_B
  * HttpStatus of the response will be BAD_REQUEST
  */
 @Getter
-public class BadRequestException extends ApiException {
+public class BadRequestException extends AppException {
 
     private final String invalidValue;
 

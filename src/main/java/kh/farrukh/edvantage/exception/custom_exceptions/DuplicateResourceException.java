@@ -1,7 +1,7 @@
 package kh.farrukh.edvantage.exception.custom_exceptions;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import kh.farrukh.edvantage.exception.ApiException;
+import kh.farrukh.edvantage.exception.AppException;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
@@ -15,7 +15,7 @@ import static kh.farrukh.edvantage.utils.constants.ExceptionMessages.EXCEPTION_D
  */
 @Getter
 @JsonIgnoreProperties
-public class DuplicateResourceException extends ApiException {
+public class DuplicateResourceException extends AppException {
 
     private final String resourceName;
     private final String fieldName;

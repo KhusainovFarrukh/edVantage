@@ -1,6 +1,6 @@
 package kh.farrukh.edvantage.exception.custom_exceptions;
 
-import kh.farrukh.edvantage.exception.ApiException;
+import kh.farrukh.edvantage.exception.AppException;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import static kh.farrukh.edvantage.utils.constants.ExceptionMessages.EXCEPTION_WRONG_EMAIL_PASSWORD;
 
 @Getter
-public class WrongEmailPasswordException extends ApiException {
+public class WrongEmailPasswordException extends AppException {
 
     private final Type type;
 

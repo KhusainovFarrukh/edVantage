@@ -6,17 +6,16 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
 import java.util.Locale;
 
 @ControllerAdvice
 @RequiredArgsConstructor
-public class ApiExceptionHandler {
+public class AppExceptionHandler {
 
     private final MessageSource messageSource;
 
-    @ExceptionHandler(ApiException.class)
-    public ModelAndView handleApiException(ApiException exception, Locale locale) {
+    @ExceptionHandler(AppException.class)
+    public ModelAndView handleApiException(AppException exception, Locale locale) {
         exception.printStackTrace();
         ModelAndView errorPage = new ModelAndView("error");
 
