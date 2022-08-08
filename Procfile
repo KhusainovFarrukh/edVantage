@@ -1,0 +1,1 @@
+web: java -Dserver.port=$PORT -jar target/edVantage-0.0.1-SNAPSHOT.jar
