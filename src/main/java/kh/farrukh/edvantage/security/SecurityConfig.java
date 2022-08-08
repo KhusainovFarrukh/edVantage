@@ -23,16 +23,13 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(
             HttpSecurity http,
             TokenAuthorizationFilter tokenAuthorizationFilter,
-            AuthenticationFilterConfigurer authenticationFilterConfigurer,
-            TokenAccessDeniedHandler accessDeniedHandler
+            AuthenticationFilterConfigurer authenticationFilterConfigurer
     ) throws Exception {
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         http.apply(authenticationFilterConfigurer);
         http.addFilterBefore(tokenAuthorizationFilter, UsernamePasswordAuthenticationFilter.class);
-
-        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler);
 
         // TODO: 8/5/22 needs endpoint for register
         http.formLogin();
