@@ -1,10 +1,6 @@
 HELP.md
-target/classes
-target/test-classes
-target/generated-sources
-target/generated-test-sources
-target/maven-archiver
-target/maven-status
+!target/
+target/*
 .idea
 *.iws
 *.iml
