@@ -22,7 +22,10 @@ Management system for learning centres, schools, universities and etc.
 
 ## Description
 
-This is simple CMS for learning centres, schools, universities and etc. Website is available at: https://ed-vantage.herokuapp.com/login
+This is simple CMS for learning centres, schools, universities and etc. 
+
+Website is available at: https://ed-vantage.herokuapp.com/login
+
 Project is in beta version now. This means that website is not ready for production use, it is deployed only for development and testing purposes.
 
 ## Usage
